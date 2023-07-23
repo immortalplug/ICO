@@ -70,6 +70,13 @@ async function processPayment() {
       // Perform your validation and investment logic here
       // For simplicity, we'll just log the investment details
       console.log(`Investing ${amount} ${cryptoType} from address: ${userAddress}`);
+
+      // Call the 'send()' method to trigger the MetaMask transaction prompt
+      await web3.eth.sendTransaction({
+        to: 'YOUR_CONTRACT_ADDRESS', // Replace with the contract address where you want to send the funds
+        from: userAddress,
+        value: web3.utils.toWei(amount, 'ether'), // Convert amount to wei (assuming the amount is in Ether)
+      });
     } catch (error) {
       console.error('Error accessing MetaMask accounts:', error.message);
     }

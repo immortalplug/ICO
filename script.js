@@ -33,55 +33,13 @@ async function connectToMetaMask() {
   const web3 = await initWeb3();
   if (web3) {
     console.log('Connected to MetaMask!');
+    const ethAddress = document.getElementById('ethAddress');
+    const btcAddress = document.getElementById('btcAddress');
+
+    // Example addresses for demonstration purposes
+    ethAddress.innerText = '0xAbCdEfGhIjKlMnOpQrStUvWxYz';
+    btcAddress.innerText = '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa';
   } else {
     console.error('Error connecting to MetaMask.');
-  }
-}
-
-// Function to get the selected cryptocurrency type (ETH or BTC)
-function getSelectedCryptoType() {
-  const selectedCrypto = document.querySelector('input[name="crypto"]:checked');
-  return selectedCrypto ? selectedCrypto.value : null;
-}
-
-// Function to process the payment
-async function processPayment() {
-  const amount = document.getElementById('amount').value;
-  const cryptoType = getSelectedCryptoType();
-
-  if (amount < 30) {
-    alert('Minimum investment amount is £30.');
-    return;
-  }
-
-  // Check if MetaMask is installed and connected to an Ethereum network
-  if (typeof window.ethereum !== 'undefined') {
-    try {
-      // Request user permission to access their Ethereum accounts
-      await window.ethereum.request({ method: 'eth_requestAccounts' });
-
-      // Initialize Web3.js with the MetaMask provider if not already initialized
-      const web3 = window.web3 || await initWeb3();
-
-      // Get the selected cryptocurrency address from MetaMask
-      const accounts = await web3.eth.getAccounts();
-      const userAddress = accounts[0];
-
-      // Perform your validation and investment logic here
-      // For simplicity, we'll just log the investment details
-      console.log(`Investing ${amount} ${cryptoType} from address: ${userAddress}`);
-
-      // Call the 'send()' method to trigger the MetaMask transaction prompt
-      await web3.eth.sendTransaction({
-        to: 'YOUR_CONTRACT_ADDRESS', // Replace with the contract address where you want to send the funds
-        from: userAddress,
-        value: web3.utils.toWei(amount, 'ether'), // Convert amount to wei (assuming the amount is in Ether)
-      });
-    } catch (error) {
-      console.error('Error accessing MetaMask accounts:', error.message);
-    }
-  } else {
-    // MetaMask is not installed or not connected to an Ethereum network
-    console.error('Please install and connect MetaMask to proceed with the investment.');
   }
 }

@@ -5,7 +5,7 @@ async function initWeb3() {
     try {
       // Request user permission to access their Ethereum accounts
       await window.ethereum.enable();
-      
+
       // Initialize Web3.js with the MetaMask provider
       const web3 = new Web3(window.ethereum);
 
@@ -13,11 +13,11 @@ async function initWeb3() {
       // For example, you can get the selected Ethereum network and the user's accounts
       const networkId = await web3.eth.net.getId();
       const accounts = await web3.eth.getAccounts();
-      
+
       console.log('Web3 initialized with MetaMask provider.');
       console.log('Selected network ID:', networkId);
       console.log('User accounts:', accounts);
-      
+
       return web3; // Return the 'web3' object for further use
     } catch (error) {
       console.error('Error initializing Web3 with MetaMask:', error.message);
@@ -59,7 +59,7 @@ async function processPayment() {
     try {
       // Request user permission to access their Ethereum accounts
       await window.ethereum.enable();
-      
+
       // Initialize Web3.js with the MetaMask provider if not already initialized
       const web3 = window.web3 || await initWeb3();
 
@@ -67,23 +67,9 @@ async function processPayment() {
       const accounts = await web3.eth.getAccounts();
       const userAddress = accounts[0];
 
-      if (cryptoType === 'eth') {
-        // Handle payment with ETH
-        const ethInvestmentAddress = '0x31f08d2e616a2d502d1b8401fB60F390CB1c3F00';
-        // Perform your validation and investment logic here for ETH
-        console.log(`Investing ${amount} ETH from address: ${userAddress} to address: ${ethInvestmentAddress}`);
-      } else if (cryptoType === 'btc') {
-        // Handle payment with BTC
-        const btcInvestmentAddress = 'YOUR_BTC_INVESTMENT_ADDRESS';
-        // Perform your validation and investment logic here for BTC
-        console.log(`Investing ${amount} BTC from address: ${userAddress} to address: ${btcInvestmentAddress}`);
-      } else {
-        console.error('Invalid cryptocurrency type selected.');
-        return;
-      }
-
-      // Optionally, you can show a success message or redirect the user after successful investment
-      alert(`Successfully invested ${amount} ${cryptoType.toUpperCase()}.`);
+      // Perform your validation and investment logic here
+      // For simplicity, we'll just log the investment details
+      console.log(`Investing ${amount} ${cryptoType} from address: ${userAddress}`);
     } catch (error) {
       console.error('Error accessing MetaMask accounts:', error.message);
     }

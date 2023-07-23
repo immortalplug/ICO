@@ -4,7 +4,7 @@ async function initWeb3() {
   if (typeof window.ethereum !== 'undefined') {
     try {
       // Request user permission to access their Ethereum accounts
-      await window.ethereum.enable();
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
 
       // Initialize Web3.js with the MetaMask provider
       const web3 = new Web3(window.ethereum);
@@ -58,7 +58,7 @@ async function processPayment() {
   if (typeof window.ethereum !== 'undefined') {
     try {
       // Request user permission to access their Ethereum accounts
-      await window.ethereum.enable();
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
 
       // Initialize Web3.js with the MetaMask provider if not already initialized
       const web3 = window.web3 || await initWeb3();
